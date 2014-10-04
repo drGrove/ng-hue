@@ -1,0 +1,27 @@
+{
+  "name": "ng-hue",
+  "version": "0.1.0",
+  "homepage": "https://github.com/drGrove/ng-hue",
+  "authors": [
+    "Danny Grove <danny@drgrovellc.com>"
+  ],
+  "description": "Hue Service and Directives for angular.js",
+  "main": "dist/hue.min.js",
+  "keywords": [
+    "Philips",
+    "Hue",
+    "hue",
+    "lights"
+  ],
+  "license": "AGPL",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "angular": "~1.2.26"
+  }
+}
