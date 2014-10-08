@@ -25,7 +25,7 @@ angular.module('exampleApp')
       , onChange: $scope.aceChanged
       }
 
-      $http.get('/views/snippets/config/app.js').then(function(res){
+      $http.get('views/snippets/config/app.js').then(function(res){
         $scope.data = res.data
       })
 
