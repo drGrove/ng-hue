@@ -76,6 +76,18 @@
           })
           return deferred.promise
         }
+
+        Configuration.discoverBridge = function(){
+          var deferred = $q.defer()
+
+          $http.get('https://www.meethue.com/api/nupnp').then(function(res){
+             ngHueConfig.bridgeIP = res.data[0].internalipaddress
+             ngHueConfig.brideName = res.data[0].name
+             deferred.resolve(res)
+          })
+
+          return deferred.promise
+        }
         
         return Configuration
       }
