@@ -17,6 +17,20 @@ angular.module('exampleApp')
     , $http
     )
     {
+      $scope.config = ngHueConfig
+
+      $scope.updateConfig = function(){
+       for(var key in $scope.config) {
+         ngHueConfig[key] = $scope.config[key]
+       } 
+      }
+
+      $scope.stationSearch = function(){
+        HueConfiguration.discoverBridge().then(function(res){
+          alert('Bridge found at ' + res.data[0].internalipaddress)
+        }) 
+      }
+
       $scope.aceConfig =
       { showGutter: true
       , useWrapMode: true
@@ -36,6 +50,5 @@ angular.module('exampleApp')
         //
       };
 
-      $scope.config = {}
     }
   );

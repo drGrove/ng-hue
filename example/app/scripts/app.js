@@ -14,6 +14,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'ui.ace',
+    'ui.bootstrap',
     'ngHue'
   ])
   .config(function ($routeProvider, ngHueConfig) {
