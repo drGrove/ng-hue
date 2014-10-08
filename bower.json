@@ -6,7 +6,7 @@
     "Danny Grove <danny@drgrovellc.com>"
   ],
   "description": "Hue Service and Directives for angular.js",
-  "main": "dist/hue.min.js",
+  "main": "src/hue.js",
   "keywords": [
     "Philips",
     "Hue",
