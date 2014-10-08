@@ -1,6 +1,5 @@
 /* Space out content a bit */
 body {
-  padding-top: 20px;
   padding-bottom: 20px;
 }
 
@@ -76,4 +75,7 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
+}
+.ace_editor {
+  height: 200px;
 }

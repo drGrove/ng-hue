@@ -12,17 +12,15 @@ angular
   .module('exampleApp', [
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ui.ace',
+    'ngHue'
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, ngHueConfig) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
       })
       .otherwise({
         redirectTo: '/'
