@@ -64,7 +64,7 @@
           var deferred = $q.defer()
           var params = {}
 
-          params.deviceType = ngHueConfig.applicationName + '#' + deviceType
+          params.devicetype = ngHueConfig.applicationName + '#' + deviceType
 
           if(username)
             params.username = username
