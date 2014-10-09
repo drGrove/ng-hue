@@ -1,0 +1,38 @@
+<h2>Create User</h2>
+<div class="row">
+  <div class="col-xs-12 col-md-6">
+    <p>
+      Once you've got a configuration create a user.
+      For this you'll be accessing the HueConfiguration Factory.
+    </p>
+    <div class="well">
+      Please click the link button then submit the form
+    </div>
+    <form role="form">
+      <div class="form-group">
+        <label for="configUsername">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          ng-model="config.username"
+          placeholder="Username"
+        />
+      </div>
+      <button
+        data-ng-click="createUser()"
+        class="btn btn-primary"
+      >
+        Create User
+      </button>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <alert
+    ng-repeat="alert in errors"
+    type="{{alert.type}}"
+    close="closeAt($index)"
+  >
+    {{alert.msg}}
+  </alert>
+</div>

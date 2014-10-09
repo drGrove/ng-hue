@@ -4,6 +4,7 @@ angular.module('youAppName',[]);
 angular.config(['ngHueConfig', function(ngHueConfig){
   ngHueConfig.applicationName = 'yourAppName'
   ngHueConfig.deviceType = 'browser'
+  ngHueConfig.username = 'ngHueBrowser'
 }])
 
 // Within the controller that has a form
