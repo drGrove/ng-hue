@@ -92,7 +92,7 @@
 
         Configuration.getFromBridge = function(){
           var baseUri = ngHueConfig.baseUri
-          var endpoint = baseUri + '/' + ngHueConfig.username + /config
+          var endpoint = baseUri + '/' + ngHueConfig.username + '/config'
           return $http.get(endpoint)
         }
 
