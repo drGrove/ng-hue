@@ -23,6 +23,7 @@
     , brideName: ''
     , bridgeIP: ''
     , applicationName: 'ngHue'
+    , baseUri: ''
     }
   )
 
@@ -57,10 +58,9 @@
       {
         var Configuration = {}
         Configuration.user = {}
-        var baseUri = 'http://' + ngHueConfig.bridgeIP + '/api'
 
         Configuration.user.create = function(deviceType, username){
-          var endpoint = baseUri+ '/api'
+          var baseUri = ngHueConfig.baseUri
           var deferred = $q.defer()
           var params = {}
 
@@ -69,7 +69,7 @@
           if(username)
             params.username = username
 
-          $http.post(endpoint, params).then(function(res){
+          $http.post(baseUri, params).then(function(res){
             ngHueConfig.username = res.data.username
             ngHueConfig.deviceType = deviceType
             deferred.resolve(res)
@@ -83,10 +83,17 @@
           $http.get('https://www.meethue.com/api/nupnp').then(function(res){
              ngHueConfig.bridgeIP = res.data[0].internalipaddress
              ngHueConfig.brideName = res.data[0].name
+             ngHueConfig.baseUri = 'http://' + ngHueConfig.bridgeIP + '/api'
              deferred.resolve(res)
           })
 
           return deferred.promise
+        }
+
+        Configuration.getFromBridge = function(){
+          var baseUri = ngHueConfig.baseUri
+          var endpoint = baseUri + '/' + ngHueConfig.username + /config
+          return $http.get(endpoint)
         }
 
         return Configuration
