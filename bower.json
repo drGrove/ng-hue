@@ -6,7 +6,10 @@
     "Danny Grove <danny@drgrovellc.com>"
   ],
   "description": "Hue Service and Directives for angular.js",
-  "main": "src/hue.js",
+  "main": [
+    "src/hue.js",
+    "src/hue.css"
+  ],
   "keywords": [
     "Philips",
     "Hue",
@@ -24,5 +27,9 @@
   ],
   "devDependencies": {
     "angular": "~1.2.26"
+  },
+  "dependencies": {
+    "angular-bootstrap": "~0.11.2",
+    "angular-slider": "~0.2.3"
   }
 }
