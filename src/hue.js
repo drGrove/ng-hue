@@ -47,7 +47,8 @@
   angular
   .module
   ( 'ngHue'
-  , [
+  , [ 'ui.bootstrap'
+    , 'ui.slider'
     ]
   )
 
@@ -65,21 +66,150 @@
     , baseUri: 'http://127.0.0.1/api'
     }
   )
-
   .directive
   ( 'lightSelect'
-  , [
+  , [ function
+      (
+      )
+      {
+        var lightSelect = {};
+        lightSelect.restrict = 'E'
+        lightSelect.scope =
+        { lights: '=lights'
+        }
+        lightSelect.link = function(scope, elem, attr) {
+
+
+        }
+        lightSelect.controller = 'LightSelectCtrl'
+        /*
+        lightSelect.template = "<accordion>"
+        lightSelect.template += "<accordion-group data-ng-repeat='light in lights'>"
+        lightSelect.template += "<accordion-heading>{{light.name}}"
+        lightSelect.template += "<i class='fa fa-lightbulb-o pull-right' ng-class=\"{'light-on': light.state.on, 'light-unreachable': !light.state.reachable}\"></i>"
+        lightSelect.template += "</accordion-heading>"
+        lightSelect.template += "<div class=\"row\">"
+        lightSelect.template += "<div class=\"col-xs-12\">"
+        lightSelect.template += "<div class=\"onoffswitch pull-right\" ng-click=\"toggleState($index, light)\">"
+        lightSelect.template += "<input type=\"checkbox\" name=\"onoffswitch\" class=\"onoffswitch-checkbox\" ng-checked=\"light.state.on\">"
+
+        lightSelect.template += "<label class=\"onoffswitch-label\" for=\"myonoffswitch\">"
+        lightSelect.template += "<span class=\"onoffswitch-inner\"></span>"
+        lightSelect.template += "<span class=\"onoffswitch-switch\"></span>"
+        lightSelect.template += "</label>"
+        lightSelect.template += "</div>"
+        lightSelect.template += "</div>"
+        lightSelect.template += "</div>"
+        lightSelect.template += "</accordion-group></accordion>"
+        */
+        lightSelect.templateUrl = '/bower_components/ng-hue/src/templates/lightSelect.html'
+        return lightSelect;
+      }
     ]
   )
 
   .controller
-  ( 'lighSelectCtrl'
+  ( 'LightSelectCtrl'
   , [ '$scope'
+    , 'Lights'
     , function
       ( $scope
+      , Lights
       )
       {
+        $scope.toggleState = function(idx, lightState){
+          Lights
+            .toggleState(idx, lightState)
+            .then(function(res){
+              Lights.get(idx).then(function(res){
+                Lights.lights[idx] = res.data
+              })
+            })
+        }
+        $scope.updateBrightness = function(idx, bri){
+          Lights
+            .updateBrightness(idx, bri)
+            .then(function(res){
+            })
+        }
+      }
+    ]
+  )
+  .factory
+  ( 'Lights'
+  , [ '$http'
+    , 'ngHueConfig'
+    , function
+      ( $http
+      , ngHueConfig
+      )
+      {
+        var Lights = {}
+        var baseUri = ngHueConfig.baseUri + '/' + ngHueConfig.username + '/lights'
 
+        Lights.lights = [];
+
+        /**
+         * Get Lights
+         * @params {String} lightId (optional)
+         * @returns {Object} lights
+         */
+        Lights.get = function
+        ( lightId
+        )
+        {
+          var endpoint = baseUri
+          if(lightId)
+            endpoint += '/' + lightId
+          return $http.get(endpoint)
+        }
+
+        /**
+         * updateName
+         * Change lights name
+         * @params {String} lightId = Light ID
+         * @params {String} naee - New light name
+         * @returns {Object} response - Response from Hue Bridge
+         */
+        Lights.updateName = function(lightId, name) {
+          var endpoint = baseUri + '/' + lightId
+          return $http.put(endpoint)
+        }
+
+        /**
+         * setState
+         * Set light State
+         * @params {String} lightId
+         * @params {Object} stateObject
+         * @returns {Object} responseObject
+         */
+        Lights.setState = function(lightId, stateObject){
+          var endpoint = baseUri + '/' + lightId + '/state'
+          return $http.put(endpoint, stateObject)
+
+        }
+
+        Lights.updateBrightness = function(lightId, bri) {
+          var state = {}
+          state.bri = bri
+          var endpoint = baseUri + '/' + lightId + '/state'
+          return $http.put(endpoint, state)
+        }
+
+        Lights.toggleState = function(lightId, stateObject){
+          stateObject.state.on = stateObject.state.on === true ? false : true
+          var state = {}
+          state.on = stateObject.state.on
+          var endpoint = baseUri + '/' + lightId + '/state'
+          return $http.put(endpoint, state)
+        }
+
+        // On load get lights
+        Lights.get().then(function(res){
+          Lights.lights = res.data
+        })
+
+        return Lights
       }
     ]
   )

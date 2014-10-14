@@ -1,0 +1,39 @@
+<accordion>
+  <accordion-group data-ng-repeat='light in lights'>
+    <accordion-heading>{{light.name}}
+
+    <i class='fa fa-lightbulb-o pull-right' ng-class="{'light-on': light.state.on, 'light-unreachable': !light.state.reachable}"></i>
+  </accordion-heading>
+    <div class="row">
+      <div class="col-sm-12 col-md-2 pull-right">
+        <div class="onoffswitch" ng-click="toggleState($index, light)">
+          <input
+            type="checkbox"
+            name="onoffswitch"
+            class="onoffswitch-checkbox"
+            ng-checked="light.state.on"
+          />
+          <label class="onoffswitch-label" for="myonoffswitch">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-10">
+        <div class="row">
+          <div class="col-xs-12">
+            <div>
+              <label>Brightness</label>
+              <input 
+                type="number" 
+                class="form-control" 
+                ng-model="light.state.bri"
+                ng-change="updateBrightness($index, light.state.bri)"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </accordion-group>
+</accordion>
