@@ -80,6 +80,7 @@
           Lights
             .toggleState(idx, lightState)
             .then(function(res){
+              idx--
               Lights.get(idx).then(function(res){
                 Lights.lights[idx] = res.data
               })
