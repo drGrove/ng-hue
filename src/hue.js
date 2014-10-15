@@ -66,27 +66,6 @@
     , baseUri: 'http://127.0.0.1/api'
     }
   )
-  .directive
-  ( 'lightSelect'
-  , [ function
-      (
-      )
-      {
-        var lightSelect = {};
-        lightSelect.restrict = 'E'
-        lightSelect.scope =
-        { lights: '=lights'
-        }
-        lightSelect.link = function(scope, elem, attr) {
-
-
-        }
-        lightSelect.controller = 'LightSelectCtrl'
-        lightSelect.templateUrl = 'templates/lightSelect.html'
-        return lightSelect;
-      }
-    ]
-  )
 
   .controller
   ( 'LightSelectCtrl'
@@ -115,6 +94,7 @@
       }
     ]
   )
+
   .factory
   ( 'Lights'
   , [ '$http'
@@ -291,5 +271,25 @@
       }
     ]
   )
+  .directive
+  ( 'lightSelect'
+  , [ function
+      (
+      )
+      {
+        var lightSelect = {};
+        lightSelect.restrict = 'E'
+        lightSelect.scope =
+        { lights: '=lights'
+        }
+        lightSelect.link = function(scope, elem, attr) {
 
+
+        }
+        lightSelect.controller = 'LightSelectCtrl'
+        lightSelect.templateUrl = 'templates/lightSelect.html'
+        return lightSelect;
+      }
+    ]
+  )
 }());
