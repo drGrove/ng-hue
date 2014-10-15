@@ -21,8 +21,11 @@
   "homepage": "https://github.com/drGrove/ng-hue",
   "devDependencies": {
     "grunt": "^0.4.5",
+    "grunt-angular-templates": "^0.5.7",
     "grunt-bump": "0.0.16",
     "grunt-karma": "^0.9.0",
-    "karma": "^0.12.24"
+    "karma": "^0.12.24",
+    "load-grunt-tasks": "^0.6.0",
+    "time-grunt": "^1.0.0"
   }
 }

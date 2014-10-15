@@ -8,7 +8,8 @@
   "description": "Hue Service and Directives for angular.js",
   "main": [
     "src/hue.js",
-    "src/hue.css"
+    "src/hue.css",
+    "dist/ng-hue-templates.js"
   ],
   "keywords": [
     "Philips",

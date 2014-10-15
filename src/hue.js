@@ -82,27 +82,7 @@
 
         }
         lightSelect.controller = 'LightSelectCtrl'
-        /*
-        lightSelect.template = "<accordion>"
-        lightSelect.template += "<accordion-group data-ng-repeat='light in lights'>"
-        lightSelect.template += "<accordion-heading>{{light.name}}"
-        lightSelect.template += "<i class='fa fa-lightbulb-o pull-right' ng-class=\"{'light-on': light.state.on, 'light-unreachable': !light.state.reachable}\"></i>"
-        lightSelect.template += "</accordion-heading>"
-        lightSelect.template += "<div class=\"row\">"
-        lightSelect.template += "<div class=\"col-xs-12\">"
-        lightSelect.template += "<div class=\"onoffswitch pull-right\" ng-click=\"toggleState($index, light)\">"
-        lightSelect.template += "<input type=\"checkbox\" name=\"onoffswitch\" class=\"onoffswitch-checkbox\" ng-checked=\"light.state.on\">"
-
-        lightSelect.template += "<label class=\"onoffswitch-label\" for=\"myonoffswitch\">"
-        lightSelect.template += "<span class=\"onoffswitch-inner\"></span>"
-        lightSelect.template += "<span class=\"onoffswitch-switch\"></span>"
-        lightSelect.template += "</label>"
-        lightSelect.template += "</div>"
-        lightSelect.template += "</div>"
-        lightSelect.template += "</div>"
-        lightSelect.template += "</accordion-group></accordion>"
-        */
-        lightSelect.templateUrl = '/bower_components/ng-hue/src/templates/lightSelect.html'
+        lightSelect.templateUrl = 'templates/lightSelect.html'
         return lightSelect;
       }
     ]
