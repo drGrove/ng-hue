@@ -132,9 +132,7 @@
       {
         var Lights = {}
         var baseUri = ngHueConfig.baseUri + '/' + ngHueConfig.username + '/lights'
-
         Lights.lights = [];
-
         /**
          * Get Lights
          * @params {String} lightId (optional)
@@ -149,7 +147,6 @@
             endpoint += '/' + lightId
           return $http.get(endpoint)
         }
-
         /**
          * updateName
          * Change lights name
@@ -161,7 +158,6 @@
           var endpoint = baseUri + '/' + lightId
           return $http.put(endpoint)
         }
-
         /**
          * setState
          * Set light State
@@ -270,13 +266,11 @@
             ngHueConfig[key] = value === null ? ngHueConfig[key] : value
           }
         }
-
         getConfigFromStorage()
         return Configuration
       }
     ]
   )
-
   .factory
   ( 'HueToast'
   , [ function
@@ -284,17 +278,13 @@
       )
       {
         var HueToast = {}
-
         HueToast.toasts = []
-
         HueToast.add = function(toast) {
           HueToast.toasts.push(toast)
         }
-
         HueToast.remove = function(idx) {
           HueToast.toasts.splice(idx, 1)
         }
-
         return HueToast
       }
     ]
@@ -311,8 +301,6 @@
         { lights: '=lights'
         }
         lightSelect.link = function(scope, elem, attr) {
-
-
         }
         lightSelect.controller = 'LightSelectCtrl'
         lightSelect.templateUrl = 'templates/lightSelect.html'
