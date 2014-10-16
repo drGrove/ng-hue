@@ -28,11 +28,44 @@
                 type="number"
                 class="form-control"
                 ng-model="light.state.bri"
+                min="0"
+                max="255"
                 ng-change="updateBrightness($index, light.state.bri)"
               />
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div>
+              <label>Saturation</label>
+              <input
+                type="number"
+                class="form-control"
+                ng-model="light.state.sat"
+                min="0"
+                max="255"
+                ng-change="updateSaturation($index, light.state.sat)"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div>
+              <label>Brightness</label>
+              <input
+                type="number"
+                class="form-control"
+                ng-model="light.state.bri"
+                min="0"
+                max="255"
+                ng-change="updateBrightness($index, light.state.bri)"
+              />
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </accordion-group>
