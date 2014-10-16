@@ -26,6 +26,14 @@ module.exports = function(grunt) {
         , dest: 'dist/ng-hue-templates.js'
         }
       }
+    , jsdoc:
+      { dist:
+        { src: ['src/*.js']
+        , options:
+          { destination: 'doc'
+          }
+        }
+      }
     }
   )
 
