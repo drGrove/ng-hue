@@ -187,13 +187,72 @@
           var endpoint = baseUri + '/' + lightId + '/state'
           return $http.put(endpoint, state)
         }
-
+        Lights.updateSaturation = function(lightId, sat) {
+          var state = {}
+          state.sat = sat
+          var endpoint = baseUri + '/' + lightId + '/state'
+          return $http.put(endpoint, state)
+        }
         // On load get lights
         Lights.get().then(function(res){
           Lights.lights = res.data
         })
-
         return Lights
+      }
+    ]
+  )
+  .factory
+  ( 'Groups'
+  , [ '$http'
+    , 'ngHueConfig'
+    , function
+      ( $http
+      , ngHueConfig
+      )
+      {
+        var Groups = {}
+        var baseUri = ngHueConfig.baseUri + '/' + ngHueConfig.username + '/groups'
+        /**
+         * Get Group(s)
+         * @params {String} groupId - optional
+         * @returns {Object} groupData
+         * @description Passing a groupId will provide a single groups details
+         * Passing no groupid will return all groups details
+         */
+        Groups.get = function(groupId) {
+          var endpoint = baseUri
+          if(groupId)
+            endpoint += '/' + groupId
+          return $http.get(endpoint)
+        }
+        /**
+         * Create Group
+         * @params {Objecct} groupObj
+         * @example
+         * { lights:
+         *    [ '1'
+         *    , '2'
+         *    ]
+         * , name: 'example group
+         * }
+         * @returns {Object}
+         */
+        Groups.create = function(groupObject) {
+          var endpoint = baseUri
+          return $http.post(endpoint)
+        }
+        /**
+         * Set State
+         * @description Set the state of a group
+         * @params {String} groupId - Group Id from bridge
+         * @params {Object} state - state object
+         */
+        Groups.setState = function(groupId, state){
+          var endpoint = baseUri
+          endpoint += '/' + groupId + '/action'
+          $http.put(endpoint, state)
+        }
+        return Groups
       }
     ]
   )
