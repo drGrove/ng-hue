@@ -75,6 +75,13 @@
       , Lights
       )
       {
+        /**
+         * Toggle State
+         * @description Toggles the on/off state of a bulb
+         * @params {String} idx - The light id
+         * @params {Object} lightState - Light State object
+         * @returns {Array} response state within promise
+         */
         $scope.toggleState = function(idx, lightState){
           Lights
             .toggleState(idx, lightState)
@@ -85,9 +92,28 @@
               })
             })
         }
+        /**
+         * Update Brightness
+         * @description Updates the brightness of a buib between 0 and 255
+         * @params {String} idx - Light Id
+         * @params {Number} bri - Brightness number between 0 and 255
+         * 0-255
+         */
         $scope.updateBrightness = function(idx, bri){
           Lights
             .updateBrightness(idx, bri)
+            .then(function(res){
+            })
+        }
+        /**
+         * Update Saturation
+         * @description Updates the saturation of a bulb between 0 and 255
+         * @params {String} idx - Light Id
+         * @params {Number} sat - Saturation between 0 and 255
+         */
+        $scope.updateSaturation = function(idx, sat) {
+          Light
+            .updateSaturation(idx, sat)
             .then(function(res){
             })
         }
@@ -146,16 +172,18 @@
         Lights.setState = function(lightId, stateObject){
           var endpoint = baseUri + '/' + lightId + '/state'
           return $http.put(endpoint, stateObject)
-
         }
-
+        /**
+         * Update Brightness
+         * @params {String} lightId - Light Id
+         * @params {Number} bri - Brightness between 0-255
+         */
         Lights.updateBrightness = function(lightId, bri) {
           var state = {}
           state.bri = bri
           var endpoint = baseUri + '/' + lightId + '/state'
           return $http.put(endpoint, state)
         }
-
         Lights.toggleState = function(lightId, stateObject){
           stateObject.state.on = stateObject.state.on === true ? false : true
           var state = {}
