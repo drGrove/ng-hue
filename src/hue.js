@@ -48,7 +48,6 @@
   .module
   ( 'ngHue'
   , [ 'ui.bootstrap'
-    , 'ui.slider'
     ]
   )
 
