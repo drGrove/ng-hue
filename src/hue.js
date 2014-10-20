@@ -1,6 +1,11 @@
 (function(){
   'use strict'
 
+  /**
+   * Stoarge Service
+   * @description Internal Storage Service wrapper for local storage
+   * @since 10-12-2014
+   */
   var Storage = {
     data : {},
     storage_id: 'HUE_',
@@ -39,7 +44,6 @@
       }
     }
   };
-
   /**
    * Defines angular module
    * @name ngHue
@@ -50,7 +54,6 @@
   , [ 'ui.bootstrap'
     ]
   )
-
   /**
    * ngHueConfig
    * @constant
@@ -65,7 +68,6 @@
     , baseUri: 'http://127.0.0.1/api'
     }
   )
-
   .controller
   ( 'LightSelectCtrl'
   , [ '$scope'
@@ -76,7 +78,7 @@
       )
       {
         /**
-         * Toggle State
+         * @function $scope.toggleState
          * @description Toggles the on/off state of a bulb
          * @params {String} idx - The light id
          * @params {Object} lightState - Light State object
@@ -93,7 +95,7 @@
             })
         }
         /**
-         * Update Brightness
+         * @function $scope.updateBrightness
          * @description Updates the brightness of a buib between 0 and 255
          * @params {String} idx - Light Id
          * @params {Number} bri - Brightness number between 0 and 255
@@ -120,7 +122,6 @@
       }
     ]
   )
-
   .factory
   ( 'Lights'
   , [ '$http'
@@ -130,7 +131,13 @@
       , ngHueConfig
       )
       {
+        /**
+         * @var {Object} Lights - Lights Factory Object
+         */
         var Lights = {}
+        /**
+         * @var {String} baseUri- API Base URI for connecting to lights
+         */
         var baseUri = ngHueConfig.baseUri + '/' + ngHueConfig.username + '/lights'
         Lights.lights = [];
         /**
@@ -228,13 +235,8 @@
         /**
          * Create Group
          * @params {Objecct} groupObj
-         * @example
-         * { lights:
-         *    [ '1'
-         *    , '2'
-         *    ]
-         * , name: 'example group
-         * }
+         * @prop {String} groupObj.name
+         * @prop {Array} groupObj.lights
          * @returns {Object}
          */
         Groups.create = function(groupObject) {
@@ -252,6 +254,19 @@
           endpoint += '/' + groupId + '/action'
           $http.put(endpoint, state)
         }
+
+        /**
+         * Set Group Attributes
+         * @params {String} groupId
+         * @params {Object} attributes
+         * @prop {Object} attributes
+         * @prop {String} attributes.name
+         * @prop {Array} attributes.lights
+         */
+        Groups.setAttributes = function(groupId, attributes) {
+
+        }
+
         return Groups
       }
     ]
