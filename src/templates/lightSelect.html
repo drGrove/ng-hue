@@ -1,5 +1,5 @@
 <accordion>
-  <accordion-group data-ng-repeat='(lightId, light) in lights'>
+  <accordion-group data-ng-repeat='(lightId, light) in lights' is-open="light.open">
     <accordion-heading>{{light.name}}
 
     <i class='fa fa-lightbulb-o pull-right' ng-class="{'light-on': light.state.on, 'light-unreachable': !light.state.reachable}"></i>
@@ -50,22 +50,6 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <div>
-              <label>Brightness</label>
-              <input
-                type="number"
-                class="form-control"
-                ng-model="light.state.bri"
-                min="0"
-                max="255"
-                ng-change="updateBrightness($index, light.state.bri)"
-              />
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </accordion-group>

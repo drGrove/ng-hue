@@ -60,12 +60,12 @@
    */
   .constant
   ( 'ngHueConfig'
-  , { deviceType: 'browser'
-    , username: ''
-    , bridgeName: 'Philip Hue'
-    , bridgeIP: '127.0.0.1'
-    , applicationName: 'ngHue'
-    , baseUri: 'http://127.0.0.1/api'
+  , { deviceType: Storage.get('deviceType') || 'browser'
+    , username: Storage.get('username') || ''
+    , bridgeName: Storage.get('bridgeName') || 'Philip Hue'
+    , bridgeIP: Storage.get('bridgeIP') || '127.0.0.1'
+    , applicationName: Storage.get('applicationName') || 'ngHue'
+    , baseUri:  Storage.get('baseUri') || 'http://127.0.0.1/api'
     }
   )
   .controller
@@ -86,11 +86,11 @@
          */
         $scope.toggleState = function(idx, lightState){
           Lights
-            .toggleState(idx, lightState)
+            .toggleState(idx + 1, lightState)
             .then(function(res){
-              idx--
-              Lights.get(idx).then(function(res){
-                Lights.lights[idx] = res.data
+              Lights.get(idx + 1).then(function(res){
+                res.data.open = true
+                  Lights.lights[idx].state = res.data.state
               })
             })
         }
@@ -103,9 +103,7 @@
          */
         $scope.updateBrightness = function(idx, bri){
           Lights
-            .updateBrightness(idx, bri)
-            .then(function(res){
-            })
+            .updateBrightness(idx + 1, bri)
         }
         /**
          * Update Saturation
@@ -114,10 +112,8 @@
          * @params {Number} sat - Saturation between 0 and 255
          */
         $scope.updateSaturation = function(idx, sat) {
-          Light
-            .updateSaturation(idx, sat)
-            .then(function(res){
-            })
+          Lights
+            .updateSaturation(idx + 1, sat)
         }
       }
     ]
@@ -126,9 +122,11 @@
   ( 'Lights'
   , [ '$http'
     , 'ngHueConfig'
+    , '$q'
     , function
       ( $http
       , ngHueConfig
+      , $q
       )
       {
         /**
@@ -182,10 +180,17 @@
          * @params {Number} bri - Brightness between 0-255
          */
         Lights.updateBrightness = function(lightId, bri) {
+          var defer = $q.defer()
           var state = {}
           state.bri = bri
           var endpoint = baseUri + '/' + lightId + '/state'
-          return $http.put(endpoint, state)
+          $http
+            .put(endpoint, state)
+            .then(function(res){
+              defer.resolve(res.data)
+            })
+
+          return defer.promise
         }
         Lights.toggleState = function(lightId, stateObject){
           stateObject.state.on = stateObject.state.on === true ? false : true
@@ -195,10 +200,16 @@
           return $http.put(endpoint, state)
         }
         Lights.updateSaturation = function(lightId, sat) {
+          var defer = $q.defer()
           var state = {}
           state.sat = sat
           var endpoint = baseUri + '/' + lightId + '/state'
-          return $http.put(endpoint, state)
+          $http
+            .put(endpoint, state)
+            .then(function(res){
+              defer.resolve(res.data)
+            })
+          return defer.promise
         }
         // On load get lights
         Lights.get().then(function(res){
@@ -333,6 +344,11 @@
           var baseUri = ngHueConfig.baseUri
           var endpoint = baseUri + '/' + ngHueConfig.username + '/config'
           return $http.get(endpoint)
+        }
+        Configuration.update = function(config) {
+          for(var key in config) {
+            Storage.set(key, config[key])
+          }
         }
         var getConfigFromStorage = function(){
           for(var key in ngHueConfig) {
