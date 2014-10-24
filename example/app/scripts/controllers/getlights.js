@@ -10,15 +10,32 @@
 angular.module('exampleApp')
   .controller
   ( 'GetLightsCtrl'
-  , function 
+  , function
     ( $scope
     , ngHueConfig
     , Lights
-    ) 
+    )
     {
-      Lights.get().then(function(res){
-        Lights.lights = res.data
-        $scope.lights = res.data
-      })
+      $scope.lights = []
+      var getLights = function(){
+        Lights.get().then(function(res){
+          var lights = []
+          var data = res.data
+          var len = data.length
+          for(var key in data) {
+            if(!data[key].error) {
+              lights.push(data[key])
+            }
+          }
+          Lights.lights = lights
+          $scope.lights = lights
+        })
+      }
+
+      $scope.getLights = function(){
+        getLights()
+      }
+
+      getLights()
     }
   );

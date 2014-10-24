@@ -23,6 +23,7 @@ angular.module('exampleApp')
        for(var key in $scope.config) {
          ngHueConfig[key] = $scope.config[key]
        }
+       HueConfiguration.update($scope.config)
       }
 
       $scope.stationSearch = function(){
@@ -33,7 +34,7 @@ angular.module('exampleApp')
         })
       }
 
-            $http.get('views/snippets/config/app.js').then(function(res){
+      $http.get('views/snippets/config/app.js').then(function(res){
         $scope.data = res.data
       })
     }

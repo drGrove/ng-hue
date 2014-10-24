@@ -85,3 +85,6 @@ body {
   min-height: 400px;
   height: auto;
 }
+.header-button {
+  margin-top: 15px;
+}
