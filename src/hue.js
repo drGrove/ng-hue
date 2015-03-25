@@ -136,7 +136,9 @@
         /**
          * @var {String} baseUri- API Base URI for connecting to lights
          */
-        var baseUri = ngHueConfig.baseUri + '/' + ngHueConfig.username + '/lights'
+        var baseUri = function(){
+          return ngHueConfig.baseUri + '/' + ngHueConfig.username + '/lights'
+        }
         Lights.lights = [];
         /**
          * Get Lights
@@ -147,7 +149,7 @@
         ( lightId
         )
         {
-          var endpoint = baseUri
+          var endpoint = baseUri()
           if(lightId)
             endpoint += '/' + lightId
           return $http.get(endpoint)
@@ -160,7 +162,7 @@
          * @returns {Object} response - Response from Hue Bridge
          */
         Lights.updateName = function(lightId, name) {
-          var endpoint = baseUri + '/' + lightId
+          var endpoint = baseUri() + '/' + lightId
           return $http.put(endpoint)
         }
         /**
@@ -171,7 +173,7 @@
          * @returns {Object} responseObject
          */
         Lights.setState = function(lightId, stateObject){
-          var endpoint = baseUri + '/' + lightId + '/state'
+          var endpoint = baseUri() + '/' + lightId + '/state'
           return $http.put(endpoint, stateObject)
         }
         /**
@@ -183,7 +185,7 @@
           var defer = $q.defer()
           var state = {}
           state.bri = bri
-          var endpoint = baseUri + '/' + lightId + '/state'
+          var endpoint = baseUri() + '/' + lightId + '/state'
           $http
             .put(endpoint, state)
             .then(function(res){
@@ -196,14 +198,14 @@
           stateObject.state.on = stateObject.state.on === true ? false : true
           var state = {}
           state.on = stateObject.state.on
-          var endpoint = baseUri + '/' + lightId + '/state'
+          var endpoint = baseUri() + '/' + lightId + '/state'
           return $http.put(endpoint, state)
         }
         Lights.updateSaturation = function(lightId, sat) {
           var defer = $q.defer()
           var state = {}
           state.sat = sat
-          var endpoint = baseUri + '/' + lightId + '/state'
+          var endpoint = baseUri() + '/' + lightId + '/state'
           $http
             .put(endpoint, state)
             .then(function(res){
@@ -311,7 +313,7 @@
         }
         Configuration.discoverBridge = function(){
           var deferred = $q.defer()
-          $http.get('https://www.meethue.com/api/nupnp').then(function(res){
+          $http.get('//client-eastwood-dot-hue-prod-us.appspot.com/api/nupnp').then(function(res){
             var ip = res.data[0].internalipaddress
             var name = res.data[0].name
             var baseUri = 'http://' + ngHueConfig.bridgeIP + '/api'
